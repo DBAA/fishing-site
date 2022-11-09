@@ -1787,6 +1787,13 @@
   "resolved" "https://registry.npmjs.org/@types/q/-/q-1.5.2.tgz"
   "version" "1.5.2"
 
+"@types/query-string@^6.3.0":
+  "integrity" "sha512-yuIv/WRffRzL7cBW+sla4HwBZrEXRNf1MKQ5SklPEadth+BKbDxiVG8A3iISN5B3yC4EeSCzMZP8llHTcUhOzQ=="
+  "resolved" "https://registry.npmjs.org/@types/query-string/-/query-string-6.3.0.tgz"
+  "version" "6.3.0"
+  dependencies:
+    "query-string" "*"
+
 "@types/react-dom@*":
   "integrity" "sha512-BX6RQ8s9D+2/gDhxrj8OW+YD4R+8hj7FEM/OJHGNR0KipE1h1mSsf39YeyC81qafkq+N3rU3h3RFbLSwE5VqUg=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-16.9.5.tgz"
@@ -9030,7 +9037,7 @@
   "resolved" "https://registry.npmjs.org/qs/-/qs-6.7.0.tgz"
   "version" "6.7.0"
 
-"query-string@^4.1.0":
+"query-string@*", "query-string@^4.1.0":
   "integrity" "sha1-u7aTucqRXCMlFbIosaArYJBD2+s="
   "resolved" "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz"
   "version" "4.3.4"

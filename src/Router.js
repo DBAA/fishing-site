@@ -7,7 +7,7 @@ import LoginPage from "./LoginPage.tsx";
 import SignUpPage from "./SignUpPage.tsx";
 import CreateFishPage from "./CreateFishPage.tsx";
 import LeaderboardPage from "./LeaderboardPage.tsx";
-import QRCodeDestinationPage from "./QRCodeDestinationPage.tsx";
+import PlayCodeDestinationPage from "./PlayCodeDestinationPage.tsx";
 import GameLinkPage from "./GameLinkPage.tsx";
 
 import {
@@ -31,7 +31,7 @@ const Router = () => {
         <Route exact path="/profile/:uuid" component={PublicProfilePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={SignUpPage} />
-        <Route exact path="/p" component={QRCodeDestinationPage} />
+        <Route exact path="/p" component={PlayCodeDestinationPage} />
         <Route exact path="/gamelink" component={GameLinkPage} />
       </Switch>
     </BrowserRouter>
