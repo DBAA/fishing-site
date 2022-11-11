@@ -33,6 +33,8 @@ const PlayCodeDestinationPage = ({prevPage}:Props) => {
                 message += 'will send this server something like:\n';
                 message += '\n';
                 message += '{"gameId":' + gameInfo.gameId + ',"score":1234,"fish_caught":"..."}';
+                // set the gameId
+                writeGameIdCurrentlyPlayed(gameInfo.gameId);
             } else {
                 message = gameInfo.errorMessage;
             }
@@ -48,5 +50,10 @@ const PlayCodeDestinationPage = ({prevPage}:Props) => {
     </>
   )
 }
+
+function writeGameIdCurrentlyPlayed(gameId:any) {
+  firebase.database().ref('/gameInfo').set({gameId:gameId});
+}
+
 
 export default PlayCodeDestinationPage
