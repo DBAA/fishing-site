@@ -127,7 +127,7 @@ const PublicProfilePage = () => {
       let items = snapshot.val();
       let appsList = [];
       for (let item in items) {
-        appsList.push(items[item]);
+        // appsList.push(items[item]);
       }
       // // sort by timestamp
       // const sortedSubmissionsList = submissionsList.sort(
