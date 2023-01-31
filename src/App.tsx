@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import styled from "styled-components";
-import firebase, { storage, auth, provider } from "./firebase.js";
+import firebase, { auth } from "./firebase.js"; // Note: re-add storage and provider if needed
 import {
   AccentColor,
   ModuleBackground,
@@ -52,12 +51,6 @@ export const ContentContainer = styled.div`
   }
 `;
 
-const SubmissionGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-`;
-
 const SubmissionsHeader = styled.h2`
   margin-left: 9px;
   border-bottom: 2px dashed ${AccentColor};
@@ -70,47 +63,12 @@ const SubmissionsHeader = styled.h2`
   }
 `;
 
-const InstructionContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  color: ${DarkTextColor};
-
-  @media (max-width: 992px) {
-    flex-direction: column;
-  }
-`;
-
-const Panel = styled.div`
-  margin: 10px;
-  background-color: ${ModuleBackground};
-  padding: 15px;
-  line-height: 25px;
-  font-family: "Raleway";
-
-  a {
-    font-weight: bold;
-  }
-`;
 const HeroText = styled.h1`
   font-size: 64px;
 
   @media (max-width: 992px) {
     font-size: 42px;
   }
-`;
-
-const NoSubmissions = styled.div`
-  text-align: center;
-  width: 100%;
-  margin: 10px;
-  margin-top: 30px;
-  padding: 100px;
-  border: 2px dashed ${AccentColor};
-`;
-
-const ShowMoreButton = styled(ActionButton)`
-  width: 100%;
-  margin: 10px;
 `;
 
 const IntroContainer = styled.div`

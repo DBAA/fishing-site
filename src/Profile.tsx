@@ -5,8 +5,6 @@ import { ContentContainer } from "./App";
 import LoginModule, { LoginContainer, Field, SubButton } from "./LoginModule";
 import styled from "styled-components";
 import { ModuleBackground, DarkTextColor } from "./colors";
-import { isReactNative } from "./img/tile_files/0.chunk.js";
-import { findAllInRenderedTree } from "react-dom/test-utils";
 
 const WebLink = styled(Field)`
   width: 400px;
@@ -49,7 +47,7 @@ const SubmissionForm = styled.form`
 `;
 
 const FileRow = styled.div`
-width; 100%;
+width: 100%;
 margin: 10px 0px;
 font-family: 'Raleway';
 display: flex;
@@ -66,18 +64,6 @@ input{
 i{margin-right:5px; color: grey;}
 `;
 
-const BuildRow = styled(FileRow)`
-  justify-content: space-between;
-  div {
-    display: flex;
-    align-items: center;
-
-    @media (max-width: 992px) {
-      flex-direction: column;
-      text-align: left;
-    }
-  }
-`;
 
 const StatusText = styled.div`
   text-align: center;

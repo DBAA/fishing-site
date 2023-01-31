@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import firebase, { auth, provider, storage } from "./firebase.js";
+import firebase, { storage } from "./firebase.js";
 import NavBar from "./NavBar";
 import { ContentContainer } from "./App";
-import LoginModule, { LoginContainer, Field, SubButton } from "./LoginModule";
+import LoginModule, { Field } from "./LoginModule";
 import styled from "styled-components";
 import { ModuleBackground, DarkTextColor } from "./colors";
-import { isReactNative } from "./img/tile_files/0.chunk.js";
+
 
 const WebLink = styled(Field)`
   width: 400px;
@@ -54,7 +54,7 @@ const InnerContainer = styled.div`
 `;
 
 const FileRow = styled.div`
-width; 100%;
+width: 100%;
 margin: 10px 0px;
 font-family: 'Raleway';
 display: flex;
@@ -108,7 +108,7 @@ const PublicProfilePage = () => {
   const linkEl = useRef<any>(null);
   const buildEl = useRef<any>(null);
 
-  const { uuid } = useParams();
+  //const { uuid } = useParams();
 
   const [thumbnailURL, setThumbnailURL] = useState<any>("");
   const [buildURL, setBuildURL] = useState<any>("");
@@ -141,7 +141,7 @@ const PublicProfilePage = () => {
       .database()
       .ref("Users")
       .orderByChild("uuid")
-      .equalTo(uuid);
+    //  .equalTo(uuid); //TODO: This was failing, not sure why
 
     thisSubmission.on("value", (snapshot) => {
       //  console.log("SNQOPHIR");
