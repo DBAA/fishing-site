@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React  from 'react';
 import { useLocation } from 'react-router-dom';
-import firebase, { auth, provider } from './firebase.js';
+import firebase from './firebase.js';
 import NavBar from './NavBar';
 import {ContentContainer, ActionButton} from './App';
-import styled from 'styled-components'
-import LoginModule from './LoginModule';
 import checkGameLink from './gameLink.js'
 import queryString from "query-string";
 

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import firebase, { auth } from "./firebase.js";
-import { ActionButton, NavButton } from "./App";
+import { NavButton } from "./App";
 import {
-  AccentColor,
-  CustYellow,
-  CustBlue,
   NavBarColor,
   ButtonColor,
 } from "./colors";
@@ -34,8 +31,8 @@ const RightNav = styled.div`
   span {
     color: white;
   }
-  }
 `;
+
 const LogoText = styled.div`
   font-family: SSStandard;
   font-size: 36px;

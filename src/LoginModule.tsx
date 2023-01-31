@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import firebase, { auth, provider } from './firebase.js';
-import NavBar from './NavBar';
-import { ContentContainer, ActionButton } from './App';
+import firebase, { auth } from './firebase.js';
+import { ActionButton } from './App';
 import styled from 'styled-components'
 import {ModuleBackground, DarkTextColor} from './colors';
 
@@ -55,7 +54,6 @@ type Props = {
 const LoginModule = ({prevPage, title, target}:Props) => {
     const [user, setUser] = useState<any>(null);
     const [nextPage, setNextPage] = useState<string>('/');
-    const [submission, setSubmission] = useState<any>(null);
     const emailEl = useRef<any>(null);
     const passwordEl = useRef<any>(null);
 

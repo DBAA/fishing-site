@@ -1,4 +1,4 @@
-var crypto = require('crypto');
+//var crypto = require('crypto'); // NOTE: This seems to no longer be needed
 
 
 export default function checkGameLink(ident) {
