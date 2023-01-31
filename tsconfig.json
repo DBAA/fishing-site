@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
