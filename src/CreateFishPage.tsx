@@ -6,7 +6,10 @@
  * sends fish and user data back up to server to update db
  * 
  * TODO:
- * real assets and standardization (400x400 resolution? centered content?)
+ * 
+ * //NOT UPDATED SINCE WE SWITCHED TO GAME MAKER
+ * //need to get user data, push fish data to firebase with user uuid
+ * 
  * asset info lookup from db or embedded into file name?
  * what are the fish stats we want to expose? how to describe move-sets? (could have an adj. type associated with each move-set/pattern)
  * implement cost of certain assets / bait currency associated with account?
@@ -81,6 +84,7 @@ function sketch(p5: P5) {
 
 
   p5.setup = () => {
+    // console.log();
     p5.createCanvas(p5.windowWidth, p5.windowHeight - 50, p5.WEBGL); //how to get height of top bar dynamically? rn just inspecting
     p5.background(bg);
     p5.textFont(font);
@@ -120,7 +124,9 @@ function sketch(p5: P5) {
     });
     
     submitButton = p5.createButton("SUBMIT FISH").class("buttons").position(2*w/3, 9 * h/10).size(w/3, h/10);
-    
+    submitButton.pressed(()=>{ //send to server, confirm TODO
+
+    });
   }
 
   p5.draw = () => {
