@@ -1,0 +1,36 @@
+{
+  "gameInfo": {
+    "gameId": "93546"
+  },
+  "players": {
+    "1234ab": {
+      "username": "durtle",
+      "fish": ["1z2bae", "2v33df"],
+      "bait": {
+        "worm": 2,
+        "shiny": 3,
+        "minnow": 1
+      }
+    }
+  },
+  "fish": {
+    "1z2bae" : {
+      "creator": "1234ab",
+      "stats": {
+        "health": 69
+      },
+      "assetInfo": {
+        "eyes": [
+          {
+            "assetID": "23",
+            "pos": [-23, 200]
+          },
+          {
+            "assetID": "23",
+            "pos": [23, 200]
+          }
+        ]
+      }
+    }
+  }
+}

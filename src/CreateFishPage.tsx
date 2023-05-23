@@ -7,7 +7,7 @@
  * 
  * TODO:
  * 
- * //NOT UPDATED SINCE WE SWITCHED TO GAME MAKER
+ * //NOT UPDATED SINCE WE SWITCHED TO CLICKTEAM
  * //need to get user data, push fish data to firebase with user uuid
  * 
  * asset info lookup from db or embedded into file name?
@@ -26,6 +26,8 @@ import styled from "styled-components";
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import P5 from "p5";
 import Fish from "./Fish";
+import {v4 as uuidGen} from 'uuid';
+let user; //TODO
 
 //asset loading
 let assets = {};
@@ -124,8 +126,22 @@ function sketch(p5: P5) {
     });
     
     submitButton = p5.createButton("SUBMIT FISH").class("buttons").position(2*w/3, 9 * h/10).size(w/3, h/10);
-    submitButton.pressed(()=>{ //send to server, confirm TODO
-
+    submitButton.mousePressed(()=>{ //send to server, confirm TODO
+      let data = {
+        "uuid": uuidGen(),
+        "creator": "test1234",
+        "color": ["#ff8300", "#234458", "#00ff00"],
+        "assetInfo": {
+          "fins": [
+            {"assetID": 3, "pos": [340, 12], "rot": 45}
+          ]
+        },
+        "stats": {
+          "health": 420,
+        }
+      }
+      // console.log(data);
+      writeFishData(data)
     });
   }
 
@@ -167,6 +183,15 @@ function loadFishAssets(){
   });
 
   return parts;
+}
+
+//testing db push -- user will be accessible outside this in future
+function writeFishData(data){
+  firebase.database().ref('fish/' + data.uuid).set(data
+  // {
+    // creator: user.uuid,
+  // }
+  )
 }
 
 //misc helper functions
