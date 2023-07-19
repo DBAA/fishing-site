@@ -1,19 +1,23 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require('firebase-functions');
+const path = require('path');
+const express = require('express');
+const app = express();
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+app.use((req, res, next) => {
+    if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+        return next();
+    } else if (req.path.startsWith('/api')) {
+        return next();
+    } else {
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        res.header('Expires', '-1');
+        res.header('Pragma', 'no-cache');
+        res.sendFile(path.join(__dirname, 'build/index.html'));
+    }
+});
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+app.get('/api', (req, res) => {
+    res.send('{"message":"Success!"}')
+});
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.app = functions.https.onRequest(app);
