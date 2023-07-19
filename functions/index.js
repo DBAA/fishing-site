@@ -1,3 +1,6 @@
+/* eslint-env es6 */
+/* eslint-disable no-console */
+
 const functions = require('firebase-functions');
 const path = require('path');
 const express = require('express');
