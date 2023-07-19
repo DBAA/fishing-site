@@ -135,7 +135,7 @@ const App = () => {
       <ContentContainer>
         <IntroContainer>
           <HeroText>Fishing Game Site</HeroText>
-          <h2>Copy goes here!</h2>
+          <h2>Copy goes here</h2>
         </IntroContainer>
         <SubmissionsHeader>
           Leaderboard will appear here:
