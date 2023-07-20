@@ -42,6 +42,35 @@ app.get('/fish_submit.php', (req, res) => {
     // TODO: save this to firebase DB
     console.log(JSON.stringify(req.query, null, ' '));
     res.send('Success!');
-  });
+});
+
+app.get('/gamelink', (req, res) => {
+    // TODO: move code to here from the react app
+});
+
+app.get('/rankings', (req, res) => {
+    let rankings = [];
+    // TODO: after game results are coming in, generate rankings
+    req.send(JSON.stringify(rankings));
+});
+
+app.get('/current-game', (req, res) => {
+    let gameid = null;
+    // TODO: add firebase lookup here
+    let result = {
+        gameid: gameid
+    }
+    req.send(JSON.stringify(result));
+});
+
+app.get('/user-data', (req, res) => {
+    let user = null;
+    // TODO: lookup player progress in the database
+    req.send(JSON.stringify(user));
+});
+
+app.get('/save-result', (req, res) => {
+    // TODO: save game result to database
+});
 
 exports.app = functions.https.onRequest(app);
