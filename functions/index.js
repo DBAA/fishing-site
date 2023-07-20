@@ -24,11 +24,7 @@ app.use((req, res, next) => {
     }
 });
 
-// a backend endpoint
-app.get('/api', (req, res) => {
-    res.send('{"message":"Success!"}')
-});
-
+// called by Fish Creator when the user saves their creation
 app.get('/fish_submit.php', (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*")
   
@@ -38,12 +34,13 @@ app.get('/fish_submit.php', (req, res) => {
       return;
     }
   
+    // TODO: save this to firebase DB instead
     // print out the submitted fish object
-    // TODO: save this to firebase DB
     console.log(JSON.stringify(req.query, null, ' '));
     res.send('Success!');
 });
 
+// called by "/p" the PlayCodeDestination, lets the Arcade Cabinet player login
 app.get('/gamelink', (req, res) => {
     let result = gameLink.check(req.query.ident);
     if (result) {
@@ -51,6 +48,7 @@ app.get('/gamelink', (req, res) => {
     }
 });
 
+// called by Arcade Cabinet to get the high score rankings
 app.get('/rankings', (req, res) => {
     let rankings = [];
     // TODO: after game results are coming in, generate rankings

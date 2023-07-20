@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import firebase from './firebase.js';
 import NavBar from './NavBar';
 import {ContentContainer, ActionButton} from './App';
-import checkGameLink from './gameLink.js'
 import queryString from "query-string";
 
 
@@ -18,6 +17,9 @@ const PlayCodeDestinationPage = ({prevPage}:Props) => {
     let queryParams = queryString.parse(location.search);
     let ident = queryParams.i;
 
+    // TODO(dustmop): Make an api call to /gamelink with `ident`
+    // If the result of that succeeds, render a "Success" message in this component
+    /*
     if (ident) {
         let gameInfo = checkGameLink(ident);
         if (gameInfo) {
@@ -38,6 +40,7 @@ const PlayCodeDestinationPage = ({prevPage}:Props) => {
             }
         }
     }
+    */
 
   return (
     <>
