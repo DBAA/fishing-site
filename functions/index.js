@@ -45,12 +45,24 @@ app.get('/fish_submit.php', (req, res) => {
 });
 
 app.get('/gamelink', (req, res) => {
-    // TODO: move code to here from the react app
+    let result = gameLink.check(req.query.ident);
+    if (result) {
+        // TODO: save result.gameId to the database
+    }
 });
 
 app.get('/rankings', (req, res) => {
     let rankings = [];
     // TODO: after game results are coming in, generate rankings
+    // ---------------------------
+    // placeholder data
+    ranks = [
+        {name: 'Alice',  score: 100},
+        {name: 'Bob',    score:  90},
+        {name: 'Carl',   score:  80},
+        {name: 'Debbie', score:  70},
+    ];
+    // ---------------------------
     req.send(JSON.stringify(rankings));
 });
 
