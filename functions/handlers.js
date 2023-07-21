@@ -10,7 +10,7 @@ var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
 var frontend = 'http://localhost:3000';
 
-const allowedPaths = [
+const apiEndpoints = [
     '/fish_submit.php',
     '/gamelink',
     '/rankings',
@@ -18,6 +18,15 @@ const allowedPaths = [
     '/user-data',
     '/save-result',
 ];
+
+function isBackendAPI(reqPath) {
+    for (let endpoint of apiEndpoints) {
+        if (reqPath.startsWith(endpoint)) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // middleware to handle routing between express & react
 app.use((req, res, next) => {
@@ -29,8 +38,8 @@ app.use((req, res, next) => {
     if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
         // static assets handled by express
         return next();
-    } else if (req.path.startsWith('/gamelink')) {
-        // explicitly allow the backend api call (see handler below)
+    } else if (isBackendAPI(req.path)) {
+        // explicitly allow the backend api (see handlers below)
         return next();
     } else {
         // otherwise serve the prebuilt react app bundle
@@ -83,7 +92,7 @@ app.get('/rankings', (req, res) => {
         {name: 'Debbie', score:  70},
     ];
     // ---------------------------
-    req.send(JSON.stringify(rankings));
+    res.send(JSON.stringify(rankings));
 });
 
 app.get('/current-game', (req, res) => {
@@ -92,13 +101,13 @@ app.get('/current-game', (req, res) => {
     let result = {
         gameid: gameid
     }
-    req.send(JSON.stringify(result));
+    res.send(JSON.stringify(result));
 });
 
 app.get('/user-data', (req, res) => {
     let user = null;
     // TODO: lookup player progress in the database
-    req.send(JSON.stringify(user));
+    res.send(JSON.stringify(user));
 });
 
 app.get('/save-result', (req, res) => {
