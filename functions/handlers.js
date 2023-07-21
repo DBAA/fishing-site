@@ -8,7 +8,7 @@ const app = express();
 
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
-var frontend = 'http://localhost:3000';
+var frontendDevProxy = 'http://localhost:3000';
 
 const apiEndpoints = [
     '/fish_submit.php',
@@ -32,7 +32,11 @@ function isBackendAPI(reqPath) {
 app.use((req, res, next) => {
 
     if (process.env['FISH_PROXY_BACKEND'] == '1') {
-        return apiProxy.web(req, res, {target: frontend});
+        if (isBackendAPI(req.path)) {
+            // don't proxy backend API requests
+            return next();
+        }
+        return apiProxy.web(req, res, {target: frontendDevProxy});
     }
 
     if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {

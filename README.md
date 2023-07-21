@@ -12,7 +12,7 @@ To run the site:
 
 `npm run start`
 
-Runs the react frontend and the express backend. Proxy requests from the backend to the frontend. Allows live development on both.
+Runs the react frontend and the express backend. Proxy requests from the backend to the frontend. Allows live development on both. Default port is 7744 (hits express backend, and proxies frontend requests to 3000).
 
 `npm run backend`
 
@@ -30,9 +30,13 @@ Serve the react frontend only. Default port 5000.
 
 Create a static build of the react frontend.
 
+`npm run copy-static-react`
+
+Copies the results of the frontend-build command into the firebase asset folder so that the express server can serve this static build of the react app.
+
 `npm run exec`
 
-Build the react frontend, copy it to the asset directly, then run the backend.
+Build the react frontend, copy it to the asset directly, then run the firebase emulator.
 
 ## Live Site
 
