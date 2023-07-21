@@ -34,7 +34,8 @@ app.get('/fish_submit.php', (req, res) => {
       return;
     }
   
-    // TODO: save this to firebase DB instead
+    //** save this to firebase DB -- what does the object look like? need uuid or some id that can be used as db index
+    firebase.database().ref('fish/' + req.query.uuid).set(req.query); //replace uuid with whatever
     // print out the submitted fish object
     console.log(JSON.stringify(req.query, null, ' '));
     res.send('Success!');
@@ -45,6 +46,7 @@ app.get('/gamelink', (req, res) => {
     let result = gameLink.check(req.query.ident);
     if (result) {
         // TODO: save result.gameId to the database
+        firebase.database().ref('gameInfo/' + req.query.ident).set(req.query); //need to figure out what our db 
     }
 });
 
@@ -52,6 +54,20 @@ app.get('/gamelink', (req, res) => {
 app.get('/rankings', (req, res) => {
     let rankings = [];
     // TODO: after game results are coming in, generate rankings
+    //
+    // we don't have a ranking array on the db rn and it seems silly to grab all users or games and
+    // sort by score, so should do that in /save-result and then access it here
+    firebase.database().ref('rankings/highscores').get().then((snapshot) => {
+        if (snapshot.exists()) {
+            ranks = snapshot.val();
+            console.log("rankings: " + snapshot.val());
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
+    //
     // ---------------------------
     // placeholder data
     ranks = [
@@ -66,7 +82,10 @@ app.get('/rankings', (req, res) => {
 
 app.get('/current-game', (req, res) => {
     let gameid = null;
-    // TODO: add firebase lookup here
+    // TODO: add firebase lookup here 
+    //
+    // not sure what this is for
+    //
     let result = {
         gameid: gameid
     }
@@ -74,13 +93,28 @@ app.get('/current-game', (req, res) => {
 });
 
 app.get('/user-data', (req, res) => {
-    let user = null;
+    let user = null; // where is login happening and is there a global userid?
     // TODO: lookup player progress in the database
+    /*
+    firebase.database().ref('players/' + ...).get().then((snapshot) => {
+        if (snapshot.exists()) {
+            user = snapshot.val();
+            console.log("user found: " + snapshot.val());
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
+    */
     req.send(JSON.stringify(user));
 });
 
 app.get('/save-result', (req, res) => {
     // TODO: save game result to database
+    firebase.database().ref('gameInfo/' + req.query.ident).set(req.query) //what's ident?
+    //TODO: insert new ranking at sorted location
+    // firebase.database().ref('rankings/highscores') ....
 });
 
 exports.app = functions.https.onRequest(app);
