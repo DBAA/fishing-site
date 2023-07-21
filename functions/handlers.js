@@ -1,3 +1,6 @@
+/* eslint-env es6 */
+/* eslint-disable no-console */
+
 const gameLink = require('./game_link.js');
 const path = require('path');
 const express = require('express');

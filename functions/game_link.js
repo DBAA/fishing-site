@@ -1,3 +1,6 @@
+/* eslint-env es6 */
+/* eslint-disable no-console */
+
 const crypto = require('crypto');
 
 
