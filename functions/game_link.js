@@ -1,4 +1,4 @@
-import crypto from 'crypto-js';
+const crypto = require('crypto');
 
 
 // TODO: change this when launching to production
@@ -19,10 +19,13 @@ const timeLimit = 60; // seconds
  *   And that the cryptographic sha1 of {now:timestamp,gameId:game-id} matches the signature
  *   If the signature matches, this guarantees the QR code came from the Arcade Cabinet
  */
-export default function check(ident) {
+function check(ident) {
   // split into signature and the base64 encoded data, using hard-coded length
   let sigWant = ident.substring(ident.length - SIGSIZE, ident.length)
   let encoded = ident.substring(0, ident.length - SIGSIZE);
+  console.log('----------')
+  console.log(sigWant);
+  console.log(encoded);
   // base64 decode, then split on the ":" character
   let parts = atob(encoded);
   let pieces = parts.split(':');
@@ -78,8 +81,9 @@ export default function check(ident) {
 
 
 function sha1(data) {
-  let sha1 = crypto.HmacSHA1(data, privateSecret);
-  let result = crypto.enc.Hex.stringify(sha1);
+  let sha1 = crypto.createHmac('sha1', privateSecret);
+  sha1.update(data);
+  let result = sha1.digest('hex');;
   return result.substring(0, SIGSIZE);
 };
 
@@ -92,3 +96,6 @@ function makeSureInt(val) {
   }
   throw new Error(`could not convert to int: ${val}`);
 }
+
+
+module.exports.check = check;

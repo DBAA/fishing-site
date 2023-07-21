@@ -2,16 +2,27 @@
 /* eslint-disable no-console */
 
 const functions = require('firebase-functions');
+const gameLink = require('./game_link.js');
 const path = require('path');
 const express = require('express');
 const app = express();
 
+const allowedPaths = [
+    '/fish_submit.php',
+    '/gamelink',
+    '/rankings',
+    '/current-game',
+    '/user-data',
+    '/save-result',
+];
+
 // middleware to handle routing between express & react
 app.use((req, res, next) => {
+  
     if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
         // static assets handled by express
         return next();
-    } else if (req.path.startsWith('/api')) {
+    } else if (req.path.startsWith('/gamelink')) {
         // explicitly allow the backend api call (see handler below)
         return next();
     } else {
@@ -42,10 +53,13 @@ app.get('/fish_submit.php', (req, res) => {
 
 // called by "/p" the PlayCodeDestination, lets the Arcade Cabinet player login
 app.get('/gamelink', (req, res) => {
-    let result = gameLink.check(req.query.ident);
+    let result = gameLink.check(req.query.i || '');
     if (result) {
         // TODO: save result.gameId to the database
+        res.send(result);
+        return;
     }
+    res.send('failed!');
 });
 
 // called by Arcade Cabinet to get the high score rankings
