@@ -1,4 +1,7 @@
-default: run
+default: nothing
+
+nothing:
+	echo 'use "make run" to build react frontend and serve with backend'
 
 run:
 	mkdir -p functions/build/

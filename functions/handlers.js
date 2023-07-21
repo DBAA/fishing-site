@@ -6,6 +6,10 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+var httpProxy = require('http-proxy');
+var apiProxy = httpProxy.createProxyServer();
+var frontend = 'http://localhost:3000';
+
 const allowedPaths = [
     '/fish_submit.php',
     '/gamelink',
@@ -17,7 +21,11 @@ const allowedPaths = [
 
 // middleware to handle routing between express & react
 app.use((req, res, next) => {
-  
+
+    if (process.env['FISH_PROXY_BACKEND'] == '1') {
+        return apiProxy.web(req, res, {target: frontend});
+    }
+
     if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
         // static assets handled by express
         return next();
@@ -31,6 +39,7 @@ app.use((req, res, next) => {
         res.header('Expires', '-1');
         res.header('Pragma', 'no-cache');
         res.sendFile(path.join(__dirname, 'build/index.html'));
+        return;
     }
 });
 

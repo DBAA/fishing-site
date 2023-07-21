@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "FISH_PROXY_BACKEND=1 concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
+    "backend": "nodemon express-backend/serve.js",
+    "emulate-firebase": "firebase emulators:start",
+    "frontend": "cd react-frontend && npm run serve",
+    "frontend-build": "cd react-frontend && npm run build",
+    "exec": "make run"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "http-proxy": "^1.18.1"
+  }
+}
