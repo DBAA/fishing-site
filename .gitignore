@@ -25,3 +25,5 @@ yarn-error.log*
 # -------------------
 
 functions/build/
+react-frontend/build
+react-frontend/node_modules
