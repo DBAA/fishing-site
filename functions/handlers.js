@@ -17,6 +17,7 @@ const apiEndpoints = [
     '/current-game',
     '/user-data',
     '/save-result',
+    '/show-creator'
 ];
 
 function isBackendAPI(reqPath) {
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
         return apiProxy.web(req, res, {target: frontendDevProxy});
     }
 
-    if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+    if (/(.ico|.js|.css|.jpg|.png|.map|.mp3|.cc1|.cch)$/i.test(req.path)) {
         // static assets handled by express
         return next();
     } else if (isBackendAPI(req.path)) {
@@ -116,6 +117,10 @@ app.get('/user-data', (req, res) => {
 
 app.get('/save-result', (req, res) => {
     // TODO: save game result to database
+});
+
+app.get('/show-creator', (req, res) => {
+    res.sendFile(path.join(__dirname, 'creator/index.html'));
 });
 
 exports.app = app;

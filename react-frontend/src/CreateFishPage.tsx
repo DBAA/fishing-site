@@ -28,8 +28,7 @@ const CreateFishPage = ({ prevPage }: Props) => {
   return (
     <>
       <NavBar />
-      <img src={assets["Dk_jr.jpg"]} />
-      <ContentContainer>Fish Creator goes here</ContentContainer>
+      <iframe width="100%" height="700px;" src="/show-creator"></iframe>
     </>
   );
 };
