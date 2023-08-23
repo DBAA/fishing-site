@@ -10,6 +10,10 @@ var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer();
 var frontendDevProxy = 'http://localhost:3000';
 
+//firebase stuff
+const functions = require('firebase-functions');
+
+
 const apiEndpoints = [
     '/fish_submit.php',
     '/gamelink',
@@ -77,7 +81,13 @@ app.get('/fish_submit.php', (req, res) => {
 app.get('/gamelink', (req, res) => {
     let result = gameLink.check(req.query.i || '');
     if (result) {
-        // TODO: save result.gameId to the database
+        if (result !== ''){
+            //not sure why this would return an empty string?
+            firebase.database().ref('gameInfo/' + result.gameid).set(req.query); //not sure what all we're storing here, or what's in req.query
+            console.log('updated db with game ID: ' + result.gameid);
+        } else {
+            console.log('db not updated, gameID is empty');
+        }
         res.send(result);
         return;
     }
@@ -101,8 +111,19 @@ app.get('/rankings', (req, res) => {
 });
 
 app.get('/current-game', (req, res) => {
-    let gameid = null;
-    // TODO: add firebase lookup here
+    let r = gameLink.check(req.query.i || '');
+    //confused about why we need gameid lookup if we're generating the id locally
+    firebase.database().ref('gameInfo/' + r.gameid).get().then((snapshot) => {
+        if (snapshot.exists()) {
+            gameid = snapshot.val(); //TODO what's being stored under gameinfo?
+            console.log("user found: " + snapshot.val());
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
+    //TODO more robust error handling depending on what we get from db
     let result = {
         gameid: gameid
     }
