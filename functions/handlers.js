@@ -1,6 +1,19 @@
 /* eslint-env es6 */
 /* eslint-disable no-console */
 
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { getStorage } from "firebase/storage";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore/lite";
+
+const firebaseConfig = {
+  databaseURL: "https://fishing-db-6d191-default-rtdb.firebaseio.com/",
+};
+const firebaseApp = initializeApp(firebaseConfig);
+const firebaseDB = getDatabase(firebaseApp);
+
+
 import gameLink from './game_link.js';
 import path from 'path';
 import url from 'url';
@@ -103,12 +116,14 @@ app.get('/rankings', (req, res) => {
 });
 
 app.get('/current-game', (req, res) => {
-    let gameid = null;
-    // TODO: add firebase lookup here
-    let result = {
-        gameid: gameid
-    }
-    res.send(JSON.stringify(result));
+    const gameIdRef = ref(firebaseDB, 'gameInfo/gameId');
+    onValue(gameIdRef, (snapshot) => {
+        const data = snapshot.val();
+        let result = {
+            gameid: data,
+        }
+        res.send(JSON.stringify(result));
+    });
 });
 
 app.get('/user-data', (req, res) => {
