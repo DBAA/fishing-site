@@ -25,21 +25,24 @@ import httpProxy from 'http-proxy';
 var apiProxy = httpProxy.createProxyServer();
 var frontendDevProxy = 'http://localhost:3000';
 
-const apiEndpoints = [
-    '/fish_submit.php',
-    '/gamelink',
-    '/rankings',
-    '/current-game',
-    '/user-data',
-    '/save-result',
-    '/show-creator'
-];
-
 function isBackendAPI(reqPath) {
-    for (let endpoint of apiEndpoints) {
-        if (reqPath.startsWith(endpoint)) {
-            return true;
+    for (let layer of app._router.stack) {
+        if (layer.route) {
+            if (reqPath.startsWith(layer.route.path)) {
+                return true;
+            }
         }
+    }
+    return false;
+}
+
+function isReactArtifact(path) {
+    if (path == '/static/js/bundle.js') {
+        return true;
+    } else if (path == '/static/js/bundle.js.map') {
+        return true;
+    } else if (path.endsWith('hot-update.json')) {
+        return true;
     }
     return false;
 }
