@@ -1,7 +1,7 @@
 /* eslint-env es6 */
 /* eslint-disable no-console */
 
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 
 // TODO: change this when launching to production
@@ -22,7 +22,7 @@ const timeLimit = 60; // seconds
  *   And that the cryptographic sha1 of {now:timestamp,gameId:game-id} matches the signature
  *   If the signature matches, this guarantees the QR code came from the Arcade Cabinet
  */
-function check(ident) {
+export default function check(ident) {
   // split into signature and the base64 encoded data, using hard-coded length
   let sigWant = ident.substring(ident.length - SIGSIZE, ident.length)
   let encoded = ident.substring(0, ident.length - SIGSIZE);
@@ -99,6 +99,3 @@ function makeSureInt(val) {
   }
   throw new Error(`could not convert to int: ${val}`);
 }
-
-
-module.exports.check = check;

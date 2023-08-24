@@ -1,12 +1,14 @@
 /* eslint-env es6 */
 /* eslint-disable no-console */
 
-const gameLink = require('./game_link.js');
-const path = require('path');
-const express = require('express');
+import gameLink from './game_link.js';
+import path from 'path';
+import url from 'url';
+import express from 'express';
 const app = express();
 
-var httpProxy = require('http-proxy');
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+import httpProxy from 'http-proxy';
 var apiProxy = httpProxy.createProxyServer();
 var frontendDevProxy = 'http://localhost:3000';
 
@@ -123,5 +125,5 @@ app.get('/show-creator', (req, res) => {
     res.sendFile(path.join(__dirname, 'creator/index.html'));
 });
 
-exports.app = app;
-exports.express = express;
+export {app, express};
+

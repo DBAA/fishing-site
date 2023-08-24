@@ -1,9 +1,10 @@
-const handlers = require('../functions/handlers.js')
-const http     = require('http').Server(handlers.app);
+import {app,express} from '../functions/handlers.js';
+import http from 'http'
+const httpserver = http.Server(app);
 const PORT     = process.env['PORT'] || 7744;
 
-handlers.app.use(handlers.express.static('public'));
+app.use(express.static('public'));
 
-http.listen(PORT, () => {
+httpserver.listen(PORT, () => {
   console.log(`Running at localhost:${PORT}`);
 });
