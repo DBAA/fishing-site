@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, child, get, set } from 'firebase/database';
 import { getStorage } from "firebase/storage";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore/lite";
@@ -14,7 +14,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firebaseDB = getDatabase(firebaseApp);
 
 
-import gameLink from './game_link.js';
+import {checkGameLink} from './game_link.js';
 import path from 'path';
 import url from 'url';
 import express from 'express';
@@ -77,14 +77,14 @@ app.use((req, res, next) => {
 
 // called by Fish Creator when the user saves their creation
 app.get('/fish_submit.php', (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*")
-  
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
     // heartbeat
     if (req.query && req.query.status) {
       res.send('online');
       return;
     }
-  
+
     // TODO: save this to firebase DB instead
     // print out the submitted fish object
     console.log(JSON.stringify(req.query, null, ' '));
@@ -93,13 +93,22 @@ app.get('/fish_submit.php', (req, res) => {
 
 // called by "/p" the PlayCodeDestination, lets the Arcade Cabinet player login
 app.get('/gamelink', (req, res) => {
-    let result = gameLink.check(req.query.i || '');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    let result = checkGameLink(req.query.i || '');
     if (result) {
-        // TODO: save result.gameId to the database
+        // result looks like this:
+        // {
+        //   gameId: "12345",
+        //   successWhen: "...",
+        //   successDelta: 5,
+        // }
+        set(ref(firebaseDB, 'gameInfo'), {
+            gameId: result.gameId,
+        });
         res.send(result);
         return;
     }
-    res.send('failed!');
+    res.send('{"error":"failed"}');
 });
 
 // called by Arcade Cabinet to get the high score rankings
@@ -119,12 +128,13 @@ app.get('/rankings', (req, res) => {
 });
 
 app.get('/current-game', (req, res) => {
-    const gameIdRef = ref(firebaseDB, 'gameInfo/gameId');
-    onValue(gameIdRef, (snapshot) => {
-        const data = snapshot.val();
+    const dbRef = ref(getDatabase());
+    get(child(dbRef, 'gameInfo/gameId')).then((snapshot) => {
+        const gameid = snapshot.val();
         let result = {
-            gameid: data,
+            gameid: gameid,
         }
+        res.setHeader("Access-Control-Allow-Origin", "*");
         res.send(JSON.stringify(result));
     });
 });

@@ -17,10 +17,14 @@ const PlayCodeDestinationPage = ({prevPage}:Props) => {
     let queryParams = queryString.parse(location.search);
     let ident = queryParams.i;
 
-    // TODO(dustmop): Make an api call to /gamelink with `ident`
-    // If the result of that succeeds, render a "Success" message in this component
-    /*
-    if (ident) {
+    fetch('/gamelink?i=' + ident).then((res) => {
+        return res.json();
+    }).then((data) => {
+        console.log(`----- gamelink response: ${data}`);
+        console.log(data);
+        /*
+        // TODO: change this compoment into an object, call setState here
+        // TODO: have this message, or a better one, replace the page content
         let gameInfo = checkGameLink(ident);
         if (gameInfo) {
             if (gameInfo.successWhen) {
@@ -39,8 +43,8 @@ const PlayCodeDestinationPage = ({prevPage}:Props) => {
                 message = gameInfo.errorMessage;
             }
         }
-    }
-    */
+        */
+    });
 
   return (
     <>

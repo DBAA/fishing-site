@@ -22,7 +22,7 @@ const timeLimit = 60; // seconds
  *   And that the cryptographic sha1 of {now:timestamp,gameId:game-id} matches the signature
  *   If the signature matches, this guarantees the QR code came from the Arcade Cabinet
  */
-export default function check(ident) {
+export function checkGameLink(ident) {
   // split into signature and the base64 encoded data, using hard-coded length
   let sigWant = ident.substring(ident.length - SIGSIZE, ident.length)
   let encoded = ident.substring(0, ident.length - SIGSIZE);
@@ -76,7 +76,7 @@ export default function check(ident) {
         };
       }
     } else {
-      console.log(`signature NOT match ${sigGot} <> ${sigWant}`);
+      console.log(`signature NOT match ${sigCalc} <> ${sigWant}`);
     }
     return false;
   }
